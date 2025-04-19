@@ -19,12 +19,16 @@ class Net(nn.Module):
     def __init__(self):
         super(Net, self).__init__()
         self.conv = nn.Conv2d(in_channels=1, out_channels=1, kernel_size=3,padding=0)
-        self.maxpool=nn.MaxPool2d(kernel_size=3,ceil_mode=True)#ceil_mode=True不舍弃边界
+        self.maxpool=nn.MaxPool2d(kernel_size=2,ceil_mode=True)#ceil_mode=True不舍弃边界
+        self.relu=nn.ReLU()
+        self.linear=nn.Linear(in_features=2,out_features=1)
     def forward(self,x):
         x=self.conv(x) 
         x=self.maxpool(x)
+        x=self.linear(x)
+        x=self.relu(x)
         return x
 
 net=Net()
 output=net(input)
-print(output)
+print(output.shape)
